@@ -11,7 +11,7 @@ namespace IES
 {
     public class DepartamentoController : Controller
     {
-        private readonly IESContext _context;
+        private readonly IESContext _context;   
 
         public DepartamentoController(IESContext context)
         {
@@ -50,6 +50,7 @@ namespace IES
             return View(departamento);
         }
 
+        //GET: Departamento/Edit/?
         public async Task<IActionResult> Edit(long? id)
         {
             if(id == null)
@@ -65,6 +66,91 @@ namespace IES
             }
 
             return View(departamento);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(long? id, [Bind("DepartamentoID, Nome")] Departamento departamento)
+
+        {
+            if(id != departamento.DepartamentoID)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(departamento);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!DepartamentoExists(departamento.DepartamentoID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(departamento);
+        }
+
+        private bool DepartamentoExists(long? id)
+        {
+            return _context.Departamentos.Any(d => d.DepartamentoID == id);
+        }
+
+        //GET: Departamento/Details/?
+        public async Task<IActionResult> Details(long? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var departamento = await _context.Departamentos.SingleOrDefaultAsync(d => d.DepartamentoID == id);
+
+            if (departamento == null)
+            {
+                return NotFound();
+            }
+
+            return View(departamento);
+        }
+
+        // GET: Departamento/Delete/?
+        public async Task<IActionResult> Delete(long? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var departamento = await _context.Departamentos.SingleOrDefaultAsync(d => d.DepartamentoID == id);
+
+            if (departamento == null)
+            {
+                return NotFound();
+            }
+
+            return View(departamento);
+        }
+
+        // POST: Departamento/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(long? id)
+        {
+            var departamento = await _context.Departamentos.SingleOrDefaultAsync(d => d.DepartamentoID == id);
+            _context.Departamentos.Remove(departamento);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
     }
