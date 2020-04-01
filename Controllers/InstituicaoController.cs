@@ -87,6 +87,7 @@ namespace IES.Controllers
         public ActionResult Delete(Instituicao instituicao)
         {
             instituicoes.Remove(instituicoes.Where(i => i.InstituicaoID == instituicao.InstituicaoID).First());
+            TempData["Message"] = "Instituição " + instituicao.InstituicaoID + " foi removida";
             return RedirectToAction("Index");
         }
 
