@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using IES.Data;
 using IES.Models;
@@ -11,18 +9,23 @@ namespace IES.Controllers
 {
     public class InstituicaoController : Controller
     {
+        #region Database Context
         private readonly IESContext _context;
 
         public InstituicaoController(IESContext context)
         {
             this._context = context;
         }
+        #endregion
 
+        #region List/Index
         public async Task<IActionResult> Index()
         {
             return View(await _context.Instituicoes.OrderBy(i => i.Nome).ToListAsync());
         }
+        #endregion
 
+        #region Create
         //GET: Create
         public ActionResult Create()
         {
@@ -49,7 +52,9 @@ namespace IES.Controllers
 
             return View(instituicao);
         }
+        #endregion
 
+        #region Edit
         public async Task<IActionResult> Edit(long? id)
         {
             if (id == null)
@@ -104,7 +109,9 @@ namespace IES.Controllers
         {
             return _context.Instituicoes.Any(i => i.InstituicaoID == id);
         }
+        #endregion
 
+        #region Details
         public async Task<IActionResult> Details(long? id)
         {
             if (id == null)
@@ -121,7 +128,9 @@ namespace IES.Controllers
 
             return View(instituicao);
         }
+        #endregion
 
+        #region Delete
         public async Task<IActionResult> Delete(long? id)
         {
             if (id == null)
@@ -148,7 +157,6 @@ namespace IES.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
-
+        #endregion
     }
 }

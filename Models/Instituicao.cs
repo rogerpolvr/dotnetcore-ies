@@ -10,5 +10,9 @@ namespace IES.Models
         public long? InstituicaoID { get; set; }
         public string Nome { get; set; }
         public string Endereco { get; set; }
+
+        #region Relacionamento: Departamento
+        public virtual ICollection<Departamento> Departamentos { get; set; }
+        #endregion
     }
 }
