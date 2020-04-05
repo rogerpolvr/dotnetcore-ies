@@ -7,6 +7,7 @@ using IES.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Model.Cadastros;
 
 namespace IES
 {

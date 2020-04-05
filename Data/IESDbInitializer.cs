@@ -1,4 +1,5 @@
 ﻿using IES.Models;
+using Model.Cadastros;
 using System.Linq;
 
 namespace IES.Data

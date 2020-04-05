@@ -1,4 +1,4 @@
-﻿@model IES.Models.Instituicao
+﻿@model Model.Cadastros.Instituicao
 
 @{
     ViewData["Title"] = "Delete";
@@ -11,20 +11,20 @@
     <h4>Instituicao</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Nome)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Nome)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Endereco)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Endereco)
         </dd>
     </dl>
-    
+
     <form asp-action="Delete">
         <input type="hidden" asp-for="InstituicaoID" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
