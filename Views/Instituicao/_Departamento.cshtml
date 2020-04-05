@@ -1,0 +1,18 @@
+﻿@model IEnumerable<IES.Models.Departamento>
+
+
+<div>
+    <h5>Departamentos</h5>
+    <hr />
+    <div class="row">
+
+        @foreach (var departamento in Model)
+        {
+            <div class="col-sm-10">
+                @Html.DisplayFor(modelItem => departamento.Nome)
+            </div>
+        }
+    </div>
+</div>
+
+

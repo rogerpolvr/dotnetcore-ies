@@ -23,6 +23,9 @@
             @Html.DisplayFor(model => model.Endereco)
         </dd>
     </dl>
+    <div class="mb-3">
+        @{await Html.RenderPartialAsync("_Departamento", Model.Departamentos.OrderBy(d => d.Nome).ToList()); }
+    </div>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.InstituicaoID">Edit</a> |
