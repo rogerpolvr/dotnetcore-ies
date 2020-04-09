@@ -18,7 +18,8 @@ namespace IES.Data.DAL.Cadastros
 
         public IQueryable<Departamento> ObterDepartamentosClassificadosPorNome()
         {
-            return _context.Departamentos.OrderBy(i => i.Nome);
+            return _context.Departamentos
+                .Include(i => i.Instituicao).OrderBy(b => b.Nome);
         }
 
         public async Task<Departamento> ObterDepartamentoPorId(long id)
