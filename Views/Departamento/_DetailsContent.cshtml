@@ -1,0 +1,18 @@
+﻿@model Model.Cadastros.Departamento
+
+<h4>Departamento</h4>
+<hr />
+<dl class="row">
+    <dt class="col-sm-2">
+        Departamento:
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Nome)
+    </dd>
+    <dt class="col-sm-2">
+        Instituição:
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Instituicao.Nome)
+    </dd>
+</dl>
