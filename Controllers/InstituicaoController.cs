@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using IES.Data;
+using IES.Data.DAL.Cadastros;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Model.Cadastros;
@@ -11,17 +12,44 @@ namespace IES.Controllers
     {
         #region Database Context
         private readonly IESContext _context;
+        private readonly InstituicaoDAL instituicaoDAL;
 
         public InstituicaoController(IESContext context)
         {
-            this._context = context;
+            _context = context;
+            instituicaoDAL = new InstituicaoDAL(context);
+        }
+        #endregion
+
+        #region Metódos Auxiliares
+        private async Task<IActionResult> ObterVisaoInstituicaoPorId(long? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var instituicao = await instituicaoDAL.ObterInstituicaoPorId((long)id);
+
+            if (instituicao == null)
+            {
+                return NotFound();
+            }
+
+            return View(instituicao);
+        }
+
+        private async Task<bool> InstituicaoExists(long? id)
+        {
+            return await instituicaoDAL.ObterInstituicaoPorId((long)id) != null;
         }
         #endregion
 
         #region List/Index
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Instituicoes.OrderBy(i => i.Nome).ToListAsync());
+            return View(await instituicaoDAL
+                .ObterInstituicoesClassificadasPorNome().ToListAsync());
         }
         #endregion
 
@@ -40,8 +68,7 @@ namespace IES.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    _context.Add(instituicao);
-                    await _context.SaveChangesAsync();
+                    await instituicaoDAL.GravarInstituicao(instituicao);
                     return RedirectToAction(nameof(Index));
                 }
             }
@@ -57,19 +84,7 @@ namespace IES.Controllers
         #region Edit
         public async Task<IActionResult> Edit(long? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var instituicao = await _context.Instituicoes.SingleOrDefaultAsync(i => i.InstituicaoID == id);
-
-            if (instituicao == null)
-            {
-                return NotFound();
-            }
-
-            return View(instituicao);
+            return await ObterVisaoInstituicaoPorId(id);
         }
 
         [HttpPost]
@@ -86,12 +101,11 @@ namespace IES.Controllers
             {
                 try
                 {
-                    _context.Update(instituicao);
-                    await _context.SaveChangesAsync();
+                    await instituicaoDAL.GravarInstituicao(instituicao);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!InstituicaoExists(instituicao.InstituicaoID))
+                    if (await InstituicaoExists(instituicao.InstituicaoID))
                     {
                         return NotFound();
                     }
@@ -103,60 +117,27 @@ namespace IES.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(instituicao);
-        }
-
-        private bool InstituicaoExists(long? id)
-        {
-            return _context.Instituicoes.Any(i => i.InstituicaoID == id);
-        }
+        }           
         #endregion
 
         #region Details
         public async Task<IActionResult> Details(long? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var instituicao = await _context.Instituicoes
-                .Include(d => d.Departamentos)
-                .SingleOrDefaultAsync(i => i.InstituicaoID == id);
-
-            if (instituicao == null)
-            {
-                return NotFound();
-            }
-
-            return View(instituicao);
+            return await ObterVisaoInstituicaoPorId(id);
         }
         #endregion
 
         #region Delete
         public async Task<IActionResult> Delete(long? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var instituicao = await _context.Instituicoes.SingleOrDefaultAsync(i => i.InstituicaoID == id);
-
-            if (instituicao == null)
-            {
-                return NotFound();
-            }
-
-            return View(instituicao);
+            return await ObterVisaoInstituicaoPorId(id);
         }
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long? id)
         {
-            var instituicao = await _context.Instituicoes.SingleOrDefaultAsync(i => i.InstituicaoID == id);
-            _context.Instituicoes.Remove(instituicao);
-            await _context.SaveChangesAsync();
+            await instituicaoDAL.EliminarInstituicaoPorId((long)id);
             return RedirectToAction(nameof(Index));
         }
         #endregion
