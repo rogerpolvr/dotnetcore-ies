@@ -6,8 +6,8 @@ namespace Model.Cadastros
 {
     public class Disciplina
     {
-        public long? CursoID { get; set; }
-        public Curso Curso { get; set; }
+        public long? DisciplinaID { get; set; }
+        public string Nome { get; set; }
         public virtual ICollection<CursoDisciplina> CursosDisciplinas { get; set; }
 
     }
