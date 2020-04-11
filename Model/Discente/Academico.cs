@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
@@ -12,6 +13,7 @@ namespace Model.Discente
         [StringLength(10, MinimumLength = 10)]
         [RegularExpression("([0-9]{10})")]
         [Required]
+        [DisplayName("RA")]
         public string RegistroAcademico { get; set; }
 
         [Required]
