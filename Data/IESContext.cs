@@ -1,6 +1,7 @@
 ﻿using IES.Models;
 using Microsoft.EntityFrameworkCore;
 using Model.Cadastros;
+using Model.Discente;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace IES.Data
         public DbSet<Instituicao> Instituicoes { get; set; }
         public DbSet<Curso> Cursos { get; set; }
         public DbSet<Disciplina> Disciplinas { get; set; }
+        public DbSet<Academico> Academicos { get; set; }
 
 
         public IESContext(DbContextOptions<IESContext> options) : base(options)
