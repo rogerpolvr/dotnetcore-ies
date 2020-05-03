@@ -7,6 +7,17 @@ IES é uma web app desenvolvida como estudo em conjunto com algumas literaturas 
 * Entity Framework Core
 * SQLServer Express
 
+## :scroll: Comandos
+* Download da imagem SQLServer para Docker/Linux
+```console
+docker pull mcr.microsoft.com/mssql/server:2019-CU3-ubuntu-18.04
+```
+
+* Criar uma instancia do SQLServer no Docker com o nome "IES_database" e senha "12345a!".
+```console
+ docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=12345a!" -p 1433:1433 --name IES_database -d mcr.microsoft.com/mssql/server:2019-CU3-ubuntu-18.04
+ ```
+
 ## :page_facing_up: Referências
 :book: **Livro**: [ASP.NET Core MVC](https://www.casadocodigo.com.br/products/livro-aspnet-core-mvc) - Aplicações modernas em conjunto com o Entity Framework.
 
