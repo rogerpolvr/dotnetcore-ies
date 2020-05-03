@@ -13,10 +13,10 @@ IES é uma web app desenvolvida como estudo em conjunto com algumas literaturas 
 docker pull mcr.microsoft.com/mssql/server:2019-CU3-ubuntu-18.04
 ```
 
-* Criar uma instancia do SQLServer no Docker com o nome "IES_database" e senha "12345a!".
+* Criar uma instancia do SQLServer no Docker com o nome "ies" e senha "<YourStrong@Passw0rd>".
 ```console
-docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=12345a!" \
-   -p 1433:1433 --name ies_database \
+docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=<YourStrong@Passw0rd>" \
+   -p 1433:1433 --name ies \
    -d mcr.microsoft.com/mssql/server:2019-CU3-ubuntu-18.04
  ```
 
