@@ -15,7 +15,9 @@ docker pull mcr.microsoft.com/mssql/server:2019-CU3-ubuntu-18.04
 
 * Criar uma instancia do SQLServer no Docker com o nome "IES_database" e senha "12345a!".
 ```console
- docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=12345a!" -p 1433:1433 --name IES_database -d mcr.microsoft.com/mssql/server:2019-CU3-ubuntu-18.04
+docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=12345a!" \
+   -p 1433:1433 --name IES_database \
+   -d mcr.microsoft.com/mssql/server:2019-CU3-ubuntu-18.04
  ```
 
 ## :page_facing_up: Referências
